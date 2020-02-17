@@ -1101,6 +1101,9 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 	dirt5
 		icon_state = "dirt5"
+	
+	jen
+		icon_state = "dirt_jen"
 
 
 /obj/decal/cleanable/cobweb
