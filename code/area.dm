@@ -1272,6 +1272,115 @@ area/station/communications
 	name = "Inner Maintenance"
 	icon_state = "imaint"
 
+/////////////////////////////////////////////////// Donut 3 specific areas
+
+// Security
+
+/area/station/security/quarters
+	name = "Security Officer Quarters"
+	icon_state = "officer_quarters"
+
+/area/station/security/equipment
+	name = "Security Equipment Storage"
+	icon_state = "sec_equipment"
+
+/area/station/security/interrogation
+	name = "Security Interrogation"
+	icon_state = "interrogation"
+
+/area/station/security/brig/north_side
+	name = "Brig Long-Term Cell - North Side"
+	icon_state = "brigcell_Nside"
+
+/area/station/security/brig/south_side
+	name = "Brig Long-Term Cell - South Side"
+	icon_state = "brigcell_Sside"
+
+/area/station/security/brig/solitary
+	name = "Brig - Solitary Cells"
+	icon_state = "brigcell"
+
+// Medical
+
+/area/station/medical/medbay/treatment
+	name = "Treatment Center"
+	icon_state = "treatment_center"
+
+// INNER Maintenance
+
+/area/station/maintenance/outer
+	name = "Outer Maintenance"
+	icon_state = "OUT_maint"
+
+/area/station/maintenance/inner/north
+	name = "North Inner Maintenance"
+	icon_state = "IN_Nmaint"
+
+/area/station/maintenance/inner/ne
+	name = "Northeast Inner Maintenance"
+	icon_state = "IN_NEmaint"
+
+/area/station/maintenance/inner/east
+	name = "East Inner Maintenance"
+	icon_state = "IN_Emaint"
+
+/area/station/maintenance/inner/se
+	name = "Southeast Inner Maintenance"
+	icon_state = "IN_SEmaint"
+
+/area/station/maintenance/inner/south
+	name = "South Inner Maintenance"
+	icon_state = "IN_Smaint"
+
+/area/station/maintenance/inner/sw
+	name = "Southwest Inner Maintenance"
+	icon_state = "IN_SWmaint"
+
+/area/station/maintenance/inner/west
+	name = "West Inner Maintenance"
+	icon_state = "IN_Wmaint"
+
+/area/station/maintenance/inner/nw
+	name = "Northwest Inner Maintenance"
+	icon_state = "IN_NWmaint"
+
+// OUTER maintenance
+
+/area/station/maintenance/outer/north
+	name = "North Outer Maintenance"
+	icon_state = "OUT_Nmaint"
+
+/area/station/maintenance/outer/ne
+	name = "Northeast Outer Maintenance"
+	icon_state = "OUT_NEmaint"
+
+/area/station/maintenance/outer/east
+	name = "East Outer Maintenance"
+	icon_state = "OUT_Emaint"
+
+/area/station/maintenance/outer/se
+	name = "Southeast Outer Maintenance"
+	icon_state = "OUT_SEmaint"
+
+/area/station/maintenance/outer/south
+	name = "South Outer Maintenance"
+	icon_state = "OUT_Smaint"
+
+/area/station/maintenance/outer/sw
+	name = "Southwest Outer Maintenance"
+	icon_state = "OUT_SWmaint"
+
+/area/station/maintenance/outer/west
+	name = "West Outer Maintenance"
+	icon_state = "OUT_Wmaint"
+
+/area/station/maintenance/outer/nw
+	name = "Northwest Outer Maintenance"
+	icon_state = "OUT_NWmaint"
+
+////////////////////////////////////////////////////////// end
+
+
 /area/station/maintenance/storage
 	name = "Atmospherics"
 	icon_state = "green"

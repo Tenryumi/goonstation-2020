@@ -50,6 +50,11 @@
 		cross //HEY YOU! YEAH, YOU LOOKING AT THIS. Use these for the corners of your catwalks!
 			name = "catwalk surface" //Or I'll murder you since you are making things ugly on purpose.
 			icon_state = "catwalk_cross" //(Statement does not apply when you actually want to use the other ones.)
+	
+		jen // ^^ no I made my own because I am epic
+			name = "maintenance catwalk"
+			icon_state = "catwalk_jen"
+			desc = "This looks marginally more safe than the ones outside!"
 
 	onMaterialChanged()
 		..()
