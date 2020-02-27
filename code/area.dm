@@ -1277,6 +1277,10 @@ area/station/communications
 
 // Security
 
+/area/shuttle/asylum
+	name = "Asylum Shuttle"
+	icon_state = "asylum_shuttle"
+
 /area/station/security/quarters
 	name = "Security Officer Quarters"
 	icon_state = "officer_quarters"

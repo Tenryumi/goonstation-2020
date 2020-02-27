@@ -9,6 +9,7 @@
 	lg = 1
 	lb = 0.1
 
+
 /obj/machinery/computer/shuttle/embedded
 	icon_state = "shuttle-embed"
 	density = 0
@@ -30,6 +31,33 @@
 	west
 		dir = WEST
 		pixel_x = -25
+
+
+/obj/machinery/computer/asylum_shuttle
+	name = "Asylum Shuttle"
+	icon_state = "shuttle"
+	var/active = 0
+
+	embedded
+		icon_state = "shuttle-embed"
+		density = 0
+		layer = EFFECTS_LAYER_1 // Must appear over cockpit shuttle wall thingy.
+
+		north
+			dir = NORTH
+			pixel_y = 25
+
+		east
+			dir = EAST
+			pixel_x = 25
+
+		south
+			dir = SOUTH
+			pixel_y = -25
+
+		west
+			dir = WEST
+			pixel_x = -25
 
 /obj/machinery/computer/prison_shuttle
 	name = "Prison Shuttle"
