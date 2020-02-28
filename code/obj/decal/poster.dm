@@ -470,6 +470,12 @@
 			name = "COLD LOOP"
 			icon_state = "wall_coldloop"
 
+		horizontal_arrow
+			name = "arrow sign"
+			desc = "An arrow sign pointing into, unbelievably... a direction!!!"
+			icon_state = "horizontal_arrow"
+
+
 		poster_hair
 			name = "Fabulous Hair!"
 			desc = "There's a bunch of ladies with really fancy hair pictured on this."
