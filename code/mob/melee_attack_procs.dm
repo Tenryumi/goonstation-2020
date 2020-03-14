@@ -510,6 +510,10 @@
 	msgs.clear(target)
 	msgs.valid = 1
 
+	var/cartoon_sfx = list('sound/cartoon/Cartoon_Punch_1',
+							'sound/cartoon/Cartoon_Punch_2',
+							'sound/cartoon/Cartoon_Punch_3')
+
 	var/def_zone = null
 	if (istype(affecting, /obj/item/organ))
 		var/obj/item/organ/O = affecting
@@ -532,20 +536,28 @@
 	if (!punchedmult)
 		if (narrator_mode)
 			msgs.played_sound = 'sound/vox/hit.ogg'
+		else if (cartoon_mode)
+			msgs.played_sound = pick(cartoon_sfx)
 		else
 			msgs.played_sound = 'sound/impact_sounds/Generic_Punch_2.ogg'
 		msgs.visible_message_self("<span style=\"color:red\"><B>[src] [src.punchMessage] [target], but it does absolutely nothing!</B></span>")
 		return
 
 	if (!punchmult)
-		msgs.played_sound = 'sound/impact_sounds/Generic_Snap_1.ogg'
+		if (cartoon_mode)
+			msgs.played_sound = pick(cartoon_sfx)
+		else
+			msgs.played_sound = 'sound/impact_sounds/Generic_Snap_1.ogg'
 		msgs.visible_message_self("<span style=\"color:red\"><B>[src] hits [target] with a ridiculously feeble attack!</B></span>")
 		return
 
 	var/damage = rand(base_damage_low, base_damage_high) * punchedmult * punchmult + extra_damage + calculate_bonus_damage(msgs)
 
 	if (!target.canmove && target.lying)
-		msgs.played_sound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+		if (cartoon_mode)
+			msgs.played_sound = pick(cartoon_sfx)
+		else
+			msgs.played_sound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 		msgs.base_attack_message = "<span style=\"color:red\"><B>[src] [src.kickMessage] [target]!</B></span>"
 		msgs.logs = list("[src.kickMessage] %target%")
 		if (ishuman(src))
@@ -587,7 +599,10 @@
 
 		if (can_crit && prob(STAMINA_CRIT_CHANCE))
 			msgs.stamina_crit = 1
-			msgs.played_sound = "sound/impact_sounds/Generic_Punch_1.ogg"
+			if (cartoon_mode)
+				msgs.played_sound = pick(cartoon_sfx)
+			else
+				msgs.played_sound = "sound/impact_sounds/Generic_Punch_1.ogg"
 			//msgs.visible_message_target("<span style=\"color:red\"><B><I>... and lands a devastating hit!</B></I></span>")
 
 		msgs.base_attack_message = "<span style=\"color:red\"><B>[src] [src.punchMessage] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B></span>"
@@ -615,21 +630,34 @@
 
 	var/damage = 0
 	var/send_flying = 0 // 1: a little bit | 2: across the room
+	var/hit_sound = '' // no sound at first!
 
 	if (isrobot(target))
 		var/mob/living/silicon/robot/BORG = target
 		if (!BORG.part_head)
 			user.visible_message("<span style=\"color:red\"><B>[user] smashes [BORG.name] to pieces!</B></span>")
-			playsound(user.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
+			if (cartoon_sfx)
+				hit_sound = 'sound/cartoonsfx/Cartoon_Impact_Metal_2.ogg'
+			else
+				hit_sound = 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg'
+			playsound(user.loc, hit_sound, 70, 1)
 			BORG.gib()
 		else
 			if (BORG.part_head.ropart_get_damage_percentage() >= 85)
 				user.visible_message("<span style=\"color:red\"><B>[user] grabs [BORG.name]'s head and wrenches it right off!</B></span>")
-				playsound(user.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
+				if (cartoon_sfx)
+					hit_sound = 'sound/cartoonsfx/Cartoon_Impact_Metal_2.ogg'
+				else
+					hit_sound = 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg'
+				playsound(user.loc, hit_sound, 70, 1)
 				BORG.compborg_lose_limb(BORG.part_head)
 			else
 				user.visible_message("<span style=\"color:red\"><B>[user] pounds on [BORG.name]'s head furiously!</B></span>")
-				playsound(user.loc, "sound/impact_sounds/Metal_Clang_3.ogg", 50, 1)
+				if (cartoon_sfx)
+					hit_sound = 'sound/cartoonsfx/Cartoon_Impact_Metal_1.ogg'
+				else
+					hit_sound = 'sound/impact_sounds/Metal_Clang_3.ogg'
+				playsound(user.loc, hit_sound, 50, 1)
 				BORG.part_head.ropart_take_damage(rand(20,40),0)
 				if (!BORG.anchored && prob(30))
 					user.visible_message("<span style=\"color:red\"><B>...and sends them flying!</B></span>")
@@ -637,12 +665,20 @@
 
 	else if (isAI(target))
 		user.visible_message("<span style=\"color:red\"><B>[user] [pick("wails", "pounds", "slams")] on [target]'s terminal furiously!</B></span>")
-		playsound(user.loc, "sound/impact_sounds/Metal_Clang_3.ogg", 50, 1)
+		if (cartoon_sfx)
+			hit_sound = 'sound/cartoonsfx/Cartoon_Impact_Metal_1.ogg'
+		else
+			hit_sound = 'sound/impact_sounds/Metal_Clang_3.ogg'
+		playsound(user.loc, hit_sound, 50, 1)
 		damage = 10
 
 	else
 		user.visible_message("<span style=\"color:red\"><B>[user] smashes [target] furiously!</B></span>")
-		playsound(user.loc, "sound/impact_sounds/Metal_Clang_3.ogg", 50, 1)
+		if (cartoon_sfx)
+			hit_sound = 'sound/cartoonsfx/Cartoon_Impact_Metal_1.ogg'
+		else
+			hit_sound = 'sound/impact_sounds/Metal_Clang_3.ogg'
+		playsound(user.loc, hit_sound, 50, 1)
 		damage = 10
 		if (!target.anchored && prob(30))
 			user.visible_message("<span style=\"color:red\"><B>...and sends them flying!</B></span>")
