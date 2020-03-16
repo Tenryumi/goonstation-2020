@@ -1289,10 +1289,6 @@ area/station/communications
 	name = "Security Equipment Storage"
 	icon_state = "sec_equipment"
 
-/area/station/security/interrogation
-	name = "Security Interrogation"
-	icon_state = "interrogation"
-
 /area/station/security/brig/north_side
 	name = "Brig Long-Term Cell - North Side"
 	icon_state = "brigcell_Nside"
@@ -2084,7 +2080,7 @@ area/station/crewquarters/cryotron
 
 /area/station/security/interrogation
 	name = "Interrogation Room"
-	icon_state = "red"
+	icon_state = "interrogation"
 	sound_environment = 2
 
 /area/station/security/processing
