@@ -5,52 +5,62 @@
 	density = 1
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "railing"
-	layer = 2.9
+	layer = OBJ_LAYER - 0.1
 	color = "#ffffff"
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
 	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
-	dir = 2
-	//list of atoms that can pass over rails!
-	var/list/passable_things = list(/obj/projectile, 
-	/obj/critter, 
-	/obj/item, 
-	/mob/living/carbon/human/monkey)
+	dir = SOUTH
+
+	proc/layerify()
+		if (dir == SOUTH)
+			layer = MOB_LAYER + 1
+
+		else if (dir == NORTH)
+			layer = OBJ_LAYER - 0.2
+		
+		else
+			layer = OBJ_LAYER - 0.1
 
 	New()
 		..()
 		SPAWN_DBG(1 DECI SECOND) // why are you like this why is this necessary
-		if (dir == 2)
-			layer = MOB_LAYER + 1
-		else
-			layer = OBJ_LAYER - 0.1
+		layerify()
 
 
-	CanPass(atom/movable/mover, turf/target)
-		for (var/i=1, i <= src.passable_things.len, i++)
-			if (istype(mover, src.passable_things[i]))
-				return !density
-		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST)
+	CanPass(atom/movable/O as mob|obj, turf/target, height=0, air_group=0)
+		if (!src.density || (O.flags & TABLEPASS || istype(O, /obj/newmeteor)) )
+			return 1
+			world.log << "CanPass: [O.name] Is nodense / tablepass! Pass!"
+		if(air_group || (height==0)) 
+			return 1
+			world.log << "CanPass: [O.name] Is air/height0! Pass!"
+		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST) // why would you be like this
 			return 0
-		if(get_dir(loc, target) == dir)
+			world.log << "CanPass: [src.name] Is diagonal ([src.dir])! FAIL!"
+		if(get_dir(loc, O) == dir)
 			return !density
+			world.log << "CanPass: [O.name] Not our dir! Pass!"
 		else
+			world.log << "CanPass: [O.name] Passed all checks! Pass!"
 			return 1
 
 	CheckExit(atom/movable/O as mob|obj, target as turf)
 		if (!src.density)
+			world.log << "CheckExit: [O.name] Is not dense! Pass!"
 			return 1
-		if(istype(O, /obj/projectile))
-			return !density
-		if (get_dir(O.loc, target) == src.dir)
+		else if (!src.density || (O.flags & TABLEPASS || istype(O, /obj/newmeteor)) )
+			world.log << "CheckExit: [O.name] Is nodense / tablepass! Pass!"
+			return 1
+		else if (get_dir(O.loc, target) == src.dir)
+			world.log << "CheckExit: Same dir as ours ([src.dir])! FAIL!"
 			return 0
-		return 1
+		else
+			world.log << "CheckExit: Passed all checks! Pass!"
+			return 1
 	
 	Turn()
 		..()
-		if (dir == 2)
-			layer = MOB_LAYER + 1
-		else
-			layer = OBJ_LAYER
+		layerify()
 			
 
 	/*CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -84,7 +94,7 @@
 		color = "#09ff00"
 	
 	yellow
-		color = "#fbff00"
+		color = "#ffe600"
 
 	purple
 		color = "#cc00ff"
