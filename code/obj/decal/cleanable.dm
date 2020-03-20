@@ -682,6 +682,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	sample_verb = "scrape"
 
 /obj/decal/cleanable/rust/jen
+	layer = OBJ_LAYER - 0.3
 	icon_state = "rust_jen"
 	random_icon_states = null
 
