@@ -30,32 +30,32 @@
 	CanPass(atom/movable/O as mob|obj, turf/target, height=0, air_group=0)
 		if (!src.density || (O.flags & TABLEPASS || istype(O, /obj/newmeteor)) )
 			return 1
-			world.log << "CanPass: [O.name] Is nodense / tablepass! Pass!"
+			/* world.log << "CanPass: [O.name] Is nodense / tablepass! Pass!" */
 		if(air_group || (height==0)) 
 			return 1
-			world.log << "CanPass: [O.name] Is air/height0! Pass!"
+			/* world.log << "CanPass: [O.name] Is air/height0! Pass!" */
 		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST) // why would you be like this
 			return 0
-			world.log << "CanPass: [src.name] Is diagonal ([src.dir])! FAIL!"
+			/* world.log << "CanPass: [src.name] Is diagonal ([src.dir])! FAIL!" */
 		if(get_dir(loc, O) == dir)
 			return !density
-			world.log << "CanPass: [O.name] Not our dir! Pass!"
+			/* world.log << "CanPass: [O.name] Not our dir! Pass!" */
 		else
-			world.log << "CanPass: [O.name] Passed all checks! Pass!"
+			/* world.log << "CanPass: [O.name] Passed all checks! Pass!" */
 			return 1
 
 	CheckExit(atom/movable/O as mob|obj, target as turf)
 		if (!src.density)
-			world.log << "CheckExit: [O.name] Is not dense! Pass!"
+			/* world.log << "CheckExit: [O.name] Is not dense! Pass!" */
 			return 1
 		else if (!src.density || (O.flags & TABLEPASS || istype(O, /obj/newmeteor)) )
-			world.log << "CheckExit: [O.name] Is nodense / tablepass! Pass!"
+			/* world.log << "CheckExit: [O.name] Is nodense / tablepass! Pass!" */
 			return 1
 		else if (get_dir(O.loc, target) == src.dir)
-			world.log << "CheckExit: Same dir as ours ([src.dir])! FAIL!"
+			/* world.log << "CheckExit: Same dir as ours ([src.dir])! FAIL!" */
 			return 0
 		else
-			world.log << "CheckExit: Passed all checks! Pass!"
+			/* world.log << "CheckExit: Passed all checks! Pass!" */
 			return 1
 	
 	Turn()
