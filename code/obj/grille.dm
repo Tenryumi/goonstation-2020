@@ -55,6 +55,21 @@
 			name = "maintenance catwalk"
 			icon_state = "catwalk_jen"
 			desc = "This looks marginally more safe than the ones outside!"
+			var/turf/my_turf = null
+
+			New()
+				..()
+				my_turf = get_turf_loc(src)
+			
+			attack_hand(obj/M, mob/user)
+				return 0
+			
+			attackby(obj/item/W, mob/user)
+				if (issnippingtool(W))
+					..()
+				else
+					my_turf.attackby(user.equipped(), user)
+				
 
 	onMaterialChanged()
 		..()
