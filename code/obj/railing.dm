@@ -61,7 +61,14 @@
 	Turn()
 		..()
 		layerify()
-			
+	
+	attackby(obj/item/I, mob/user)
+		var/obj/item/weldingtool/WELDER
+		if (I == WELDER)
+			if (WELDER.get_fuel() == 2)
+				actions.start(new /datum/action/bar/icon/railingDeconstruct(src), user)
+			else
+				user.show_text("[WELDER] doesn't have enough fuel!", "red")
 
 	/*CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 		world.log << ("CANPASS TRIGGERED")
@@ -101,3 +108,45 @@
 
 	blue
 		color = "#0026ff"
+
+/datum/action/bar/icon/railingDeconstruct
+	duration = 30
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "railing_deconstruct"
+	icon = 'icons/obj/items/tools/weldingtool.dmi'
+	icon_state = "weldingtool_on"
+	var/obj/railing/target
+	var/mob/living/user
+	var/obj/item/weldingtool/WELDER
+	var/mob/ownerMob
+
+	New(Target)
+		target = Target
+		WELDER = user.find_type_in_hand(/obj/item/weldingtool)
+		ownerMob = owner
+		..()
+	
+	onUpdate()
+		..()
+		if(get_dist(owner, target) > 1 || target == null || owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+	
+	onStart()
+		..()
+		if(get_dist(owner, target) > 1 || target == null || owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		for(var/mob/O in AIviewers(owner))
+			O.show_text("[owner] begins to weld [target]!", "red")
+		WELDER.eyecheck(user)
+
+	onEnd()
+		..()
+		if (owner && target && get_dist(owner, target) <= 1 && (istype(ownerMob.equipped(), /obj/item/weldingtool)))
+			for(var/mob/O in AIviewers(owner))
+				O.show_text("[owner] welds [target] apart.", "red")
+			var/obj/item/ammo/bullets/rod/R = new(target)
+			R.amount = 4
+			qdel(target)
+			WELDER.use_fuel(1)

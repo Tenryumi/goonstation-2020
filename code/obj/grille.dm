@@ -69,7 +69,9 @@
 					..()
 				else
 					my_turf.attackby(user.equipped(), user)
-				
+			
+			reagent_act(var/reagent_id,var/volume)
+				..()
 
 	onMaterialChanged()
 		..()
