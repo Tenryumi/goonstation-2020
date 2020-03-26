@@ -833,3 +833,53 @@
 		next_artifact.set_loc(pick(ass_arena_spawn).loc)
 		processing_items.Remove(src)
 		..()
+
+/obj/item/scpgnome
+	name = "strange sarcophagus"
+	desc = "A sarcophagus bound by magical chains."
+	icon = 'icons/obj/junk.dmi'
+	icon_state = "sarc_0"
+	var/gnome = 1
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(istype(W,/obj/item/scpgnome_lid) && ((src.icon_state == "sarc_2")||(src.icon_state == "sarc_3")))
+			user.u_equip(W)
+			qdel(W)
+			src.icon_state = "sarc_1"
+		else if(istype(W,/obj/item/gnomechompski/mummified) && (src.icon_state == "sarc_3"))
+			user.u_equip(W)
+			qdel(W)
+			src.icon_state = "sarc_2"
+			src.gnome = 1
+		else if(istype(W,/obj/item/device/key/chompskey) && (src.icon_state == "sarc_0"))
+			user.u_equip(W)
+			qdel(W)
+			src.icon_state = "sarc_key"
+		else
+			..()
+
+	attack_hand(mob/user as mob)
+		if(src.icon_state == "sarc_key")
+			src.icon_state = "opening"
+			sleep(23)
+			src.icon_state = "sarc_1"
+		else if(src.icon_state == "sarc_1")
+			if(src.gnome)
+				src.icon_state = "sarc_2"
+			else
+				src.icon_state = "sarc_3"
+			user.put_in_hand_or_drop(new /obj/item/scpgnome_lid)
+		else if(src.icon_state == "sarc_2")
+			src.gnome = 0
+			src.icon_state = "sarc_3"
+			user.put_in_hand_or_drop(new /obj/item/gnomechompski/mummified)
+
+/obj/item/scpgnome_lid
+	name = "strange sarcophagus lid"
+	desc = "The lid to some sort of sarcophagus"
+	icon = 'icons/obj/junk.dmi'
+	icon_state = "sarc_1"
+
+/obj/item/gnomechompski/mummified
+	name = "mummified object"
+	icon_state = "mummified"
