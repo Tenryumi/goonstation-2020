@@ -839,6 +839,7 @@
 	desc = "A sarcophagus bound by magical chains."
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "sarc_0"
+	density = 1
 	var/gnome = 1
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -891,6 +892,27 @@
 		var/obj/item/gnomechompski/g = new /obj/item/gnomechompski
 		if(prob(30))
 			g.icon_state = pick(gnomes)
+			switch(g.icon_state)
+				if("gnelf")
+					src.name = "Gnelf Chompski"
+				if("chome-gnompski")
+					src.name = "Chome Gnompski"
+				if("chrome-chompski")
+					src.name = "Chrome Chompski"
+				if("gnuigi-chompini")
+					src.name = "Gnuigi Chompini"
+				if("usagi-tsukinompski")
+					src.name = "Usagi Tsukinompski"
+				if("sans-undertaleski")
+					src.name = "Boss Musicski"
+				if("gnoctor-florpski")
+					src.name = "Gnoctor Florpski"
+				if("gnos-secureski")
+					src.name = "Gnos Secureski"
+				if("crime-chompski")
+					src.name = "Crime Chompski"
+				if("antignome-negachompski")
+					src.name = "Ikspmohc-Emong"
 		user.put_in_hand_or_drop(g)
 		user.visible_message("<span style=\"color:red\">[user.name] unwraps the [src]!</span>")
 		qdel(src)
