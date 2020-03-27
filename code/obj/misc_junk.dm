@@ -883,3 +883,14 @@
 /obj/item/gnomechompski/mummified
 	name = "mummified object"
 	icon_state = "mummified"
+	var/list/gnomes = list("gnelf","chome-gnompski","chrome-chompski","gnuigi-chompini","usagi-tsukinompski","sans-undertaleski","gnoctor-florpski","gnos-secureski","crime-chompski","antignome-negachompski")
+	
+	attack_self(mob/user as mob)
+		user.u_equip(src)
+		src.set_loc(user)
+		var/obj/item/gnomechompski/g = new /obj/item/gnomechompski
+		if(prob(30))
+			g.icon_state = pick(gnomes)
+		user.put_in_hand_or_drop(g)
+		user.visible_message("<span style=\"color:red\">[user.name] unwraps the [src]!</span>")
+		qdel(src)
