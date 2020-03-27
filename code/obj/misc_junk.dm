@@ -894,25 +894,25 @@
 			g.icon_state = pick(gnomes)
 			switch(g.icon_state)
 				if("gnelf")
-					src.name = "Gnelf Chompski"
+					g.name = "Gnelf Chompski"
 				if("chome-gnompski")
-					src.name = "Chome Gnompski"
+					g.name = "Chome Gnompski"
 				if("chrome-chompski")
-					src.name = "Chrome Chompski"
+					g.name = "Chrome Chompski"
 				if("gnuigi-chompini")
-					src.name = "Gnuigi Chompini"
+					g.name = "Gnuigi Chompini"
 				if("usagi-tsukinompski")
-					src.name = "Usagi Tsukinompski"
+					g.name = "Usagi Tsukinompski"
 				if("sans-undertaleski")
-					src.name = "Boss Musicski"
+					g.name = "Boss Musicski"
 				if("gnoctor-florpski")
-					src.name = "Gnoctor Florpski"
+					g.name = "Gnoctor Florpski"
 				if("gnos-secureski")
-					src.name = "Gnos Secureski"
+					g.name = "Gnos Secureski"
 				if("crime-chompski")
-					src.name = "Crime Chompski"
+					g.name = "Crime Chompski"
 				if("antignome-negachompski")
-					src.name = "Ikspmohc-Emong"
+					g.name = "Ikspmohc-Emong"
 		user.put_in_hand_or_drop(g)
-		user.visible_message("<span style=\"color:red\">[user.name] unwraps the [src]!</span>")
+		user.visible_message("<span style=\"color:red\">[user.name] unwraps [g]!</span>")
 		qdel(src)
