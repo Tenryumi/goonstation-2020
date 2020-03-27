@@ -833,3 +833,86 @@
 		next_artifact.set_loc(pick(ass_arena_spawn).loc)
 		processing_items.Remove(src)
 		..()
+
+/obj/item/scpgnome
+	name = "strange sarcophagus"
+	desc = "A sarcophagus bound by magical chains."
+	icon = 'icons/obj/junk.dmi'
+	icon_state = "sarc_0"
+	density = 1
+	var/gnome = 1
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(istype(W,/obj/item/scpgnome_lid) && ((src.icon_state == "sarc_2")||(src.icon_state == "sarc_3")))
+			user.u_equip(W)
+			qdel(W)
+			src.icon_state = "sarc_1"
+		else if(istype(W,/obj/item/gnomechompski/mummified) && (src.icon_state == "sarc_3"))
+			user.u_equip(W)
+			qdel(W)
+			src.icon_state = "sarc_2"
+			src.gnome = 1
+		else if(istype(W,/obj/item/device/key/chompskey) && (src.icon_state == "sarc_0"))
+			user.u_equip(W)
+			qdel(W)
+			src.icon_state = "sarc_key"
+		else
+			..()
+
+	attack_hand(mob/user as mob)
+		if(src.icon_state == "sarc_key")
+			src.icon_state = "opening"
+			sleep(23)
+			src.icon_state = "sarc_1"
+		else if(src.icon_state == "sarc_1")
+			if(src.gnome)
+				src.icon_state = "sarc_2"
+			else
+				src.icon_state = "sarc_3"
+			user.put_in_hand_or_drop(new /obj/item/scpgnome_lid)
+		else if(src.icon_state == "sarc_2")
+			src.gnome = 0
+			src.icon_state = "sarc_3"
+			user.put_in_hand_or_drop(new /obj/item/gnomechompski/mummified)
+
+/obj/item/scpgnome_lid
+	name = "strange sarcophagus lid"
+	desc = "The lid to some sort of sarcophagus"
+	icon = 'icons/obj/junk.dmi'
+	icon_state = "sarc_1"
+
+/obj/item/gnomechompski/mummified
+	name = "mummified object"
+	icon_state = "mummified"
+	var/list/gnomes = list("gnelf","chome-gnompski","chrome-chompski","gnuigi-chompini","usagi-tsukinompski","sans-undertaleski","gnoctor-florpski","gnos-secureski","crime-chompski","antignome-negachompski")
+	
+	attack_self(mob/user as mob)
+		user.u_equip(src)
+		src.set_loc(user)
+		var/obj/item/gnomechompski/g = new /obj/item/gnomechompski
+		if(prob(30))
+			g.icon_state = pick(gnomes)
+			switch(g.icon_state)
+				if("gnelf")
+					src.name = "Gnelf Chompski"
+				if("chome-gnompski")
+					src.name = "Chome Gnompski"
+				if("chrome-chompski")
+					src.name = "Chrome Chompski"
+				if("gnuigi-chompini")
+					src.name = "Gnuigi Chompini"
+				if("usagi-tsukinompski")
+					src.name = "Usagi Tsukinompski"
+				if("sans-undertaleski")
+					src.name = "Boss Musicski"
+				if("gnoctor-florpski")
+					src.name = "Gnoctor Florpski"
+				if("gnos-secureski")
+					src.name = "Gnos Secureski"
+				if("crime-chompski")
+					src.name = "Crime Chompski"
+				if("antignome-negachompski")
+					src.name = "Ikspmohc-Emong"
+		user.put_in_hand_or_drop(g)
+		user.visible_message("<span style=\"color:red\">[user.name] unwraps the [src]!</span>")
+		qdel(src)
