@@ -28,7 +28,7 @@
 
 
 	CanPass(atom/movable/O as mob|obj, turf/target, height=0, air_group=0)
-		if (!src.density || (O.flags & TABLEPASS || istype(O, /obj/newmeteor)) )
+		if (!src.density || (O.flags & TABLEPASS || istype(O, /obj/newmeteor)) || istype(O, /obj/lpt_laser) )
 			return 1
 		if(air_group || (height==0)) 
 			return 1
@@ -42,7 +42,7 @@
 	CheckExit(atom/movable/O as mob|obj, target as turf)
 		if (!src.density)
 			return 1
-		else if (!src.density || (O.flags & TABLEPASS || istype(O, /obj/newmeteor)) )
+		else if (!src.density || (O.flags & TABLEPASS || istype(O, /obj/newmeteor)) || istype(O, /obj/lpt_laser) )
 			return 1
 		else if (get_dir(O.loc, target) == src.dir)
 			return 0
