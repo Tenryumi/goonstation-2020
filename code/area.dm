@@ -2745,6 +2745,12 @@ area/station/security/visitation
 	sound_environment = 12
 	do_not_irradiate = 1
 
+/area/station/turret_protected/AIsat
+	name = "AI Satellite"
+	icon_state = "ai_chamber"
+	sound_environment = 12
+	do_not_irradiate = 1
+
 /area/station/turret_protected/AIbasecore1
 	name = "AI Core 1"
 	icon_state = "AIt"
