@@ -1256,18 +1256,22 @@ area/station/communications
 /area/station/maintenance/eastsolar
 	name = "East Solar Maintenance"
 	icon_state = "SolarcontrolE"
+	force_fullbright = 1
 
 /area/station/maintenance/westsolar
 	name = "West Solar Maintenance"
 	icon_state = "SolarcontrolW"
+	force_fullbright = 1
 
 /area/station/maintenance/southsolar
 	name = "South Solar Maintenance"
 	icon_state = "SolarcontrolS"
+	force_fullbright = 1
 
 /area/station/maintenance/northsolar
 	name = "North Solar Maintenance"
 	icon_state = "SolarcontrolN"
+	force_fullbright = 1
 
 /area/station/maintenance/inner
 	name = "Inner Maintenance"
@@ -2761,6 +2765,7 @@ area/station/security/visitation
 	icon_state = "AIt"
 	requires_power = 0
 	sound_environment = 12
+	force_fullbright = 1
 
 /area/station/turret_protected/AIbasecore2
 	name = "AI Core 2"
